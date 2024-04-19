@@ -4,6 +4,7 @@
     "version": "1.0.0",
     "unity": "2021.3",
     "description": "Custom Build Settings window special for Android builds.",
+    "documentationUrl": "https://gitlab.com/IvanKot/android-build-settings",
     "keywords": [
         "android",
         "unity",
@@ -12,6 +13,6 @@
 	"author": {
 		"name": "Ivan Kotovshchikov",
 		"email": "ivankot@cybermouse.su"
-	}
+	},
     "category": "Unity"
 }
