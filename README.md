@@ -5,7 +5,7 @@ I made this package for myself, but if you find it useful, feel free to use it i
 ### Installation
 Via upm.
 1. Copy this git url [https one].
-2. Go to `Package Manager` _→_ `+`  _→_`Add package from git URL`
+2. Go to `Package Manager` _→_ `+`  _→_ `Add package from git URL`
 3. Paste Url there 
 4. Click `Add`
 
