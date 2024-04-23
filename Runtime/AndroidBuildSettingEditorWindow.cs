@@ -26,7 +26,7 @@ namespace AndroidBuildSettings.Runtime
 
         [SerializeField] public int version1, version2, version3, bundleVersion = 0;
         [SerializeField] public bool appVersionAutoincrement, bundleVersionAutoincrement = true;
-        [SerializeField] public bool deletePreviousBuild = true;
+        [SerializeField] public bool deletePreviousBuild, openAfterBuild = true;
         [SerializeField] public string previousBuildPath;
 
         private static AndroidBuildSettingEditorWindow wnd;
@@ -163,21 +163,48 @@ namespace AndroidBuildSettings.Runtime
             bundleVersionAutoincrement = GUILayout.Toggle(bundleVersionAutoincrement, "Autoincrement");
             EditorGUILayout.EndHorizontal();
             
+            GUILayout.Space(15);
+            
             EditorGUILayout.BeginHorizontal();
             deletePreviousBuild = EditorGUILayout.Toggle("Delete Previous Build", deletePreviousBuild);
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            openAfterBuild = EditorGUILayout.Toggle("Open Build Folder After Build", openAfterBuild);
             EditorGUILayout.EndHorizontal();
             
             GUILayout.FlexibleSpace();
             //GUILayout.Space(60);
             
-            GUILayout.Label("The output file path after build:", EditorStyles.miniLabel);
+            GUILayout.Label("Current build:", EditorStyles.miniLabel);
             
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.HelpBox(GetBuildLocation(), MessageType.None);
+            EditorGUILayout.HelpBox(previousBuildPath, MessageType.None);
             if (GUILayout.Button("Open", EditorStyles.miniButton, GUILayout.Width(45)))
             {
                 EditorUtility.RevealInFinder(GetBuildLocation());
             }
+
+            if (GUILayout.Button("Install", EditorStyles.miniButton, GUILayout.Width(45)))
+            {
+                if (devicesOptions[index] != "None")
+                {
+                    AndroidBuilder.InstallApkFile(previousBuildPath, devicesOptions[index]);
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError("Select android install device!");
+                }
+            }
+
+            EditorGUILayout.EndHorizontal();
+            
+            GUILayout.Space(15);
+            
+            GUILayout.Label("The output file path after build:", EditorStyles.miniLabel);
+            
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.HelpBox(GetBuildLocation(), MessageType.None);
             EditorGUILayout.EndHorizontal();
             
             GUILayout.Space(15);
@@ -227,6 +254,11 @@ namespace AndroidBuildSettings.Runtime
             if (previousBuildPath != null && deletePreviousBuild && File.Exists(previousBuildPath))
             {
                 File.Delete(previousBuildPath);
+            }
+
+            if (openAfterBuild)
+            {
+                EditorUtility.RevealInFinder(GetBuildLocation());
             }
             previousBuildPath = GetBuildLocation();
             

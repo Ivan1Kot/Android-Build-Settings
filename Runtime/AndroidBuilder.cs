@@ -50,23 +50,7 @@ namespace AndroidBuildSettings.Runtime
 
                 if (buildAndRun != "None")
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                
-                    psi.FileName = Path.Combine(EditorPrefs.GetString("AndroidSdkRoot"), "platform-tools/adb.exe");
-                    psi.Arguments = $"-s {buildAndRun.Split(new[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries)[1]} install -r {locationPath}";
-                    psi.RedirectStandardOutput = true;
-                    psi.RedirectStandardError = true;
-                    psi.RedirectStandardInput = true;
-                    psi.UseShellExecute = false;
-                    psi.CreateNoWindow = true;
-
-                    Process p = new Process();
-                    p.StartInfo = psi;
-                    p.OutputDataReceived += p_DataReceived;
-                    p.EnableRaisingEvents = true;
-                    p.Start();
-                    p.BeginOutputReadLine();
-                    p.WaitForExit();
+                    InstallApkFile(locationPath, buildAndRun);
                 }
                 
                 HandleVersion?.Invoke();
@@ -83,6 +67,27 @@ namespace AndroidBuildSettings.Runtime
             // Manipulate received data here
             string MyPhones = e.Data.ToString();
             UnityEngine.Debug.Log(MyPhones);
+        }
+
+        public static void InstallApkFile(string locationPath, string buildAndRun)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+                
+            psi.FileName = Path.Combine(EditorPrefs.GetString("AndroidSdkRoot"), "platform-tools/adb.exe");
+            psi.Arguments = $"-s {buildAndRun.Split(new[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries)[1]} install -r {locationPath}";
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            psi.RedirectStandardInput = true;
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.OutputDataReceived += p_DataReceived;
+            p.EnableRaisingEvents = true;
+            p.Start();
+            p.BeginOutputReadLine();
+            p.WaitForExit();
         }
     }
 }
