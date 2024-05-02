@@ -28,6 +28,10 @@ namespace AndroidBuildSettings.Runtime
         [SerializeField] public bool appVersionAutoincrement, bundleVersionAutoincrement = true;
         [SerializeField] public bool deletePreviousBuild, openAfterBuild = true;
         [SerializeField] public string previousBuildPath;
+        
+        [SerializeField] public bool enableSigning;
+        [SerializeField] public string keystorePassword;
+        [SerializeField] public string aliasPassword;
 
         private static AndroidBuildSettingEditorWindow wnd;
 
@@ -163,6 +167,26 @@ namespace AndroidBuildSettings.Runtime
             bundleVersionAutoincrement = GUILayout.Toggle(bundleVersionAutoincrement, "Autoincrement");
             EditorGUILayout.EndHorizontal();
             
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label("Signing", EditorStyles.boldLabel);
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            enableSigning = EditorGUILayout.Toggle("Enable signing", enableSigning);
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            keystorePassword = EditorGUILayout.TextField("Keystore password", keystorePassword);
+            GUILayout.Label("");
+            GUILayout.Label("");
+            EditorGUILayout.EndHorizontal();
+            
+            EditorGUILayout.BeginHorizontal();
+            aliasPassword = EditorGUILayout.TextField("Alias password", aliasPassword);
+            GUILayout.Label("");
+            GUILayout.Label("");
+            EditorGUILayout.EndHorizontal();
+            
             GUILayout.Space(15);
             
             EditorGUILayout.BeginHorizontal();
@@ -217,11 +241,11 @@ namespace AndroidBuildSettings.Runtime
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Build", GUILayout.Width(100)))
             {
-                AndroidBuilder.Build(GetBuildLocation(), developmentBuild, "None", GetVersion(), bundleVersion, HandleVersion, appBundleBuild);
+                AndroidBuilder.Build(GetBuildLocation(), developmentBuild, "None", GetVersion(), bundleVersion, HandleVersion, appBundleBuild, enableSigning, keystorePassword, aliasPassword);
             }
             if (GUILayout.Button("Build And Run", GUILayout.Width(100)))
             {
-                AndroidBuilder.Build(GetBuildLocation(), developmentBuild, devicesOptions[index], GetVersion(), bundleVersion, HandleVersion, appBundleBuild);
+                AndroidBuilder.Build(GetBuildLocation(), developmentBuild, devicesOptions[index], GetVersion(), bundleVersion, HandleVersion, appBundleBuild, enableSigning, keystorePassword, aliasPassword);
             }
             EditorGUILayout.EndHorizontal();
             

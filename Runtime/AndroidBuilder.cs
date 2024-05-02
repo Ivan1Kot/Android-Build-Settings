@@ -12,7 +12,7 @@ namespace AndroidBuildSettings.Runtime
 {
     public class AndroidBuilder
     {
-        public static void Build(string locationPath, bool developmentBuild, string buildAndRun, string bundleVersion, int bundleVersionCode, Action HandleVersion, bool buildAppBundle)
+        public static void Build(string locationPath, bool developmentBuild, string buildAndRun, string bundleVersion, int bundleVersionCode, Action HandleVersion, bool buildAppBundle, bool enableSigning, string keystorePassword, string aliasPassword)
         {
             List<string> scenes = new List<string>();
             foreach (var scene in EditorBuildSettings.scenes)
@@ -35,6 +35,12 @@ namespace AndroidBuildSettings.Runtime
             
             PlayerSettings.bundleVersion = bundleVersion;
             PlayerSettings.Android.bundleVersionCode = bundleVersionCode;
+
+            if (enableSigning)
+            {
+                PlayerSettings.keystorePass = keystorePassword;
+                PlayerSettings.keyaliasPass = aliasPassword;
+            }
 
             BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
             BuildSummary summary = report.summary;
