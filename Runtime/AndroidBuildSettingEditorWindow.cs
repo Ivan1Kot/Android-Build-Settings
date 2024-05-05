@@ -50,7 +50,7 @@ namespace AndroidBuildSettings.Runtime
         protected void OnEnable ()
         {
             // Here we retrieve the data if it exists or we save the default field initialisers we set above
-            var data = EditorPrefs.GetString("AndroidBuildSettingEditorWindow", JsonUtility.ToJson(this, false));
+            var data = EditorPrefs.GetString(Application.productName+".AndroidBuildSettingEditorWindow", JsonUtility.ToJson(this, false));
             // Then we apply them to this window
             JsonUtility.FromJsonOverwrite(data, this);
         }
@@ -60,7 +60,7 @@ namespace AndroidBuildSettings.Runtime
             // We get the Json data
             var data = JsonUtility.ToJson(this, false);
             // And we save it
-            EditorPrefs.SetString("AndroidBuildSettingEditorWindow", data);
+            EditorPrefs.SetString(Application.productName+".AndroidBuildSettingEditorWindow", data);
         }
 
         public string GetVersion()
