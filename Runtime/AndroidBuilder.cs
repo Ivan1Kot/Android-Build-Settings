@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using UnityEditor.Android;
 using Debug = UnityEngine.Debug;
 
 namespace AndroidBuildSettings.Runtime
@@ -79,7 +80,7 @@ namespace AndroidBuildSettings.Runtime
         {
             ProcessStartInfo psi = new ProcessStartInfo();
                 
-            psi.FileName = Path.Combine(EditorPrefs.GetString("AndroidSdkRoot"), "platform-tools/adb.exe");
+            psi.FileName = Path.Combine(AndroidExternalToolsSettings.sdkRootPath, "platform-tools/adb.exe");
             psi.Arguments = $"-s {buildAndRun.Split(new[] { '(', ')' }, StringSplitOptions.RemoveEmptyEntries)[1]} install -r {locationPath}";
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;

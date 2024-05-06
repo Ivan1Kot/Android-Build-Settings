@@ -300,7 +300,7 @@ namespace AndroidBuildSettings.Runtime
             // We get the Json data
             var data = JsonUtility.ToJson(this, false);
             // And we save it
-            EditorPrefs.SetString("AndroidBuildSettingEditorWindow", data);
+            EditorPrefs.SetString(Application.productName+".AndroidBuildSettingEditorWindow", data);
         }
     }
     
