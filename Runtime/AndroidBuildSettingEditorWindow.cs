@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.Android;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -126,7 +127,7 @@ namespace AndroidBuildSettings.Runtime
                 
                 ProcessStartInfo psi = new ProcessStartInfo();
                 
-                psi.FileName = Path.Combine(EditorPrefs.GetString("AndroidSdkRoot"), "platform-tools/adb.exe");
+                psi.FileName = Path.Combine(AndroidExternalToolsSettings.sdkRootPath, "platform-tools/adb.exe");
                 psi.Arguments = "devices -l";
                 psi.RedirectStandardOutput = true;
                 psi.RedirectStandardError = true;
