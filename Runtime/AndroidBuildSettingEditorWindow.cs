@@ -210,7 +210,7 @@ namespace AndroidBuildSettings.Runtime
                 EditorUtility.RevealInFinder(GetBuildLocation());
             }
 
-            if (GUILayout.Button("Install", EditorStyles.miniButton, GUILayout.Width(45)))
+            if (GUILayout.Button("Install", EditorStyles.miniButton, GUILayout.Width(55)))
             {
                 if (devicesOptions[index] != "None")
                 {
@@ -220,6 +220,10 @@ namespace AndroidBuildSettings.Runtime
                 {
                     UnityEngine.Debug.LogError("Select android install device!");
                 }
+            }
+            if (GUILayout.Button("Run", EditorStyles.miniButton, GUILayout.Width(40)))
+            {
+                AndroidBuilder.RunApp(PlayerSettings.applicationIdentifier);
             }
 
             EditorGUILayout.EndHorizontal();
@@ -244,9 +248,14 @@ namespace AndroidBuildSettings.Runtime
             {
                 AndroidBuilder.Build(GetBuildLocation(), developmentBuild, "None", GetVersion(), bundleVersion, HandleVersion, appBundleBuild, enableSigning, keystorePassword, aliasPassword);
             }
+            if (GUILayout.Button("Build And Install", GUILayout.Width(100)))
+            {
+                AndroidBuilder.Build(GetBuildLocation(), developmentBuild, devicesOptions[index], GetVersion(), bundleVersion, HandleVersion, appBundleBuild, enableSigning, keystorePassword, aliasPassword);
+            }
             if (GUILayout.Button("Build And Run", GUILayout.Width(100)))
             {
                 AndroidBuilder.Build(GetBuildLocation(), developmentBuild, devicesOptions[index], GetVersion(), bundleVersion, HandleVersion, appBundleBuild, enableSigning, keystorePassword, aliasPassword);
+                AndroidBuilder.RunApp(PlayerSettings.applicationIdentifier);
             }
             EditorGUILayout.EndHorizontal();
             

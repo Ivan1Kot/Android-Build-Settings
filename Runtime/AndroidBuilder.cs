@@ -96,6 +96,27 @@ namespace AndroidBuildSettings.Runtime
             p.BeginOutputReadLine();
             p.WaitForExit();
         }
+
+        public static void RunApp(string packageName)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo();
+                
+            psi.FileName = Path.Combine(AndroidExternalToolsSettings.sdkRootPath, "platform-tools/adb.exe");
+            psi.Arguments = $"shell am start {packageName}/com.unity3d.player.UnityPlayerActivity";
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            psi.RedirectStandardInput = true;
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+
+            Process p = new Process();
+            p.StartInfo = psi;
+            p.OutputDataReceived += p_DataReceived;
+            p.EnableRaisingEvents = true;
+            p.Start();
+            p.BeginOutputReadLine();
+            p.WaitForExit();
+        }
     }
 }
 #endif
